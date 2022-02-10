@@ -110,10 +110,10 @@ INSERT INTO vehicle(license, type, lot_id, spot_num) VALUES
 ('NLF16LB', 'Truck', 1, 102), ('LB06NGL', 'RV', 2, 201);
 
 
-INSERT INTO public.ticket(ticket_num, price, event_id, lot_id) VALUES
+INSERT INTO ticket(ticket_num, price, event_id, lot_id) VALUES
 (1, 88.00, 1, 1), (2, 76.98, 1, 1), (3, 149.98, 2, 2);
 
-INSERT INTO public.fan(ssn, name, car_license, car_type, ticket_num) VALUES
+INSERT INTO fan(ssn, name, car_license, car_type, ticket_num) VALUES
 (1111, 'Elizabeth Windsor', 'NLF16LB', 'Truck', 1),
 (2222, 'Taylor Swift', 'MB34HGL', 'Van', 2),
 (3333, 'Harry Styles', 'LB06NGL', 'RV', 3);
