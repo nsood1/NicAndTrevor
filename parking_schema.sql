@@ -1,6 +1,6 @@
 CREATE DATABASE rodeo_stadium;
 
----Create Tables :)
+-- Create Tables :)
 
 CREATE TABLE stadium(
     id SERIAL PRIMARY KEY,
