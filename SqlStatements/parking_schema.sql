@@ -3,7 +3,7 @@ CREATE DATABASE rodeo_stadium;
 -- Create Tables :)
 
 CREATE TABLE stadium(
-    id SERIAL PRIMARY KEY,
+    id INT auto_increment PRIMARY KEY,
     name VARCHAR(50),
     address VARCHAR(50),
     capacity INTEGER
