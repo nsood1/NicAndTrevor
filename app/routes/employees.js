@@ -1,21 +1,21 @@
 const express = require('express');
-const User = require('../models/students');
+const Employee = require('../models/employee');
 
 /**
  * https://expressjs.com/en/guide/routing.html#express-router
- * 
  * A router is a special Express object that can be used to define how to route and manage
  * requests. We configure a router here to handle a few routes specific to students
  */
+
 const router = express.Router();
 
 router.get('/current', async (req, res, next) => {
     try {
-        const user = req.user;
-        const result = await User.findUserByEmail(user.email);
+        const employee = req.employee;
+        const result = await Employee.findByName(employee.name);
         res.status(201).json(result);
     } catch (err) {
-        console.error('Failed to load current user:', err);
+        console.error('Failed to load current employee:', err);
         res.sendStatus(500).json({ message: err.toString() });
     }
 });

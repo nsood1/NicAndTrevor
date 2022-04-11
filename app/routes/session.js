@@ -1,5 +1,5 @@
 const express = require('express');
-const UserController = require('../controllers/users');
+const EmployeeController = require('../controllers/employees');
 
 /**
  * https://expressjs.com/en/guide/routing.html#express-router
