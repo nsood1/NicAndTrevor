@@ -88,9 +88,10 @@ INSERT INTO schedule(start_time, end_time, lot_id, event_id) VALUES
 ('9:30:00', '6:30:00', 2, 1),
 ('1:00:00', '11:00:00', 1, 2);
 
-INSERT INTO employee(username, schedule_num, lot_id) VALUES
-('NicoleSood', 1, 1), ('TrevorDohm', 1, 2),
-('GraceMcGinty', 2, 1), ('JoshGovota', 3, 2);
+-- Note: These passwords won't work in JS.
+INSERT INTO employee(username, password, schedule_num, lot_id) VALUES
+('NicoleSood', 'password', 1, 1), ('TrevorDohm', 'password', 1, 2),
+('GraceMcGinty', 'password', 2, 1), ('JoshGovota', 'password', 3, 2);
 -- Note: There is also a lot 3 and 4, defined above.
 
 INSERT INTO parking_spot(spot_num, is_available, is_handicap, employee_username, lot_id) VALUES
