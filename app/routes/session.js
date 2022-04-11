@@ -23,5 +23,19 @@ router.post('/', async (req, res, next) => {
     next();
 })
 
+
+router.get('/', async (req, res, next)  => {
+    try {
+        const user = req.user;
+        const result = await User.findByName(user.name);
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to load current user:', err);
+        res.sendStatus(500).json({ message: err.toString() });
+    }
+})
+
+
+
 module.exports = router;
 
