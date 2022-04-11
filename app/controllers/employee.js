@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const Employees = require('../models/employees');
+const Employees = require('../models/employee');
 
 const accessTokenSecret = 'mysupercoolsecret';
 

@@ -9,17 +9,6 @@ const Employee = require('../models/employee');
 
 const router = express.Router();
 
-router.get('/current', async (req, res, next) => {
-    try {
-        const employee = req.employee;
-        const result = await Employee.findByName(employee.name);
-        res.status(201).json(result);
-    } catch (err) {
-        console.error('Failed to load current employee:', err);
-        res.sendStatus(500).json({ message: err.toString() });
-    }
-});
-
 router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
@@ -35,4 +24,3 @@ router.post('/', async (req, res, next) => {
 })
 
 module.exports = router;
-
