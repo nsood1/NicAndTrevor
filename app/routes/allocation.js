@@ -17,7 +17,7 @@ router.post('/', async (req, res, next) => {
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed :( ', err);
-        res.status(500).json({ message: err.toString() });
+        res.status(500).json({ message: err.toString() }); 
     }
 
     next();
@@ -37,6 +37,12 @@ router.put('/', async (req, res, next) => {
     next();
 })
 
+router.delete('/', async(req, res, next)=> {
+    try{
 
+    } catch(err){
+
+    }
+})
 
 module.exports = router;
