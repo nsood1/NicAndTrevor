@@ -3,14 +3,14 @@ CREATE DATABASE rodeo_stadium;
 -- Create Tables :)
 
 CREATE TABLE stadium(
-    id INT auto_increment PRIMARY KEY,
+    id INTEGER PRIMARY KEY auto_increment,
     name VARCHAR(100),
     address VARCHAR(100),
     capacity INTEGER
 );
 
 CREATE TABLE event(
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY auto_increment,
     name VARCHAR(100),
     date DATE,
     num_sold INTEGER,
@@ -18,13 +18,13 @@ CREATE TABLE event(
 );
 
 CREATE TABLE parking_lot(
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY auto_increment,
     num_spots INTEGER,
     stadium_id INTEGER REFERENCES stadium(id)
 );
 
 CREATE TABLE schedule(
-    schedule_num INTEGER PRIMARY KEY,
+    schedule_num INTEGER PRIMARY KEY auto_increment,
     start_time TIME,
     end_time TIME,
     lot_id INTEGER REFERENCES parking_lot(id),
@@ -32,10 +32,8 @@ CREATE TABLE schedule(
 );
 
 CREATE TABLE employee(
-    id INTEGER,
-    name VARCHAR(100),
+    username VARCHAR(100) PRIMARY KEY,
     password VARCHAR(100),
-    PRIMARY KEY (id, name),
     schedule_num INTEGER REFERENCES schedule(schedule_num),
     lot_id INTEGER REFERENCES parking_lot(id)
 );
@@ -44,14 +42,12 @@ CREATE TABLE parking_spot(
     spot_num INTEGER PRIMARY KEY,
     is_available BOOL NOT NULL,
     is_handicap BOOL NOT NULL,
-    employee_id INTEGER,
-    employee_name VARCHAR(100),
-    FOREIGN KEY (employee_id, employee_name) REFERENCES employee(id, name),
+    employee_username VARCHAR(100) REFERENCES employee(username),
     lot_id INTEGER REFERENCES parking_lot(id)
 );
 
 CREATE TABLE ticket(
-    ticket_num INTEGER PRIMARY KEY,
+    ticket_num INTEGER PRIMARY KEY auto_increment,
     price FLOAT,
     event_id INTEGER REFERENCES event(id),
     lot_id INTEGER REFERENCES parking_lot(id)
@@ -80,35 +76,35 @@ INSERT INTO stadium(name, address, capacity)
 VALUES('Rodeo', '11059 Harry Hines', 80000),
 ('Cowpokes', '88 Main Street', 50000);
 
-INSERT INTO event(id, name, date, num_sold, stadium_id)
-VALUES (1, 'Dallas AnimeCon OwO', '3-25-22', 35000, 1),
- (2, 'Math Olympics! Proofs Welcome!', '7-16-22', 2000, 2);
+INSERT INTO event(name, date, num_sold, stadium_id)
+VALUES ('Dallas AnimeCon OwO', '2010-12-31', 35000, 1),
+ ('Math Olympics! Proofs Welcome!', '2011-4-13', 2000, 2);
 
 INSERT INTO parking_lot(num_spots, stadium_id)
 VALUES (3000, 1), (5000, 1), (3000, 2), (600, 2);
 
-INSERT INTO schedule(schedule_num, start_time, end_time, lot_id, event_id) VALUES
-(1, '8:00:00', '5:00:00', 1, 1),
-(2, '9:30:00', '6:30:00', 2, 1),
-(3, '1:00:00', '11:00:00', 1, 2);
+INSERT INTO schedule(start_time, end_time, lot_id, event_id) VALUES
+('8:00:00', '5:00:00', 1, 1),
+('9:30:00', '6:30:00', 2, 1),
+('1:00:00', '11:00:00', 1, 2);
 
-INSERT INTO employee(id, name, schedule_num, lot_id) VALUES
-(1, 'Nicole Sood', 1, 1), (2, 'Trevor Dohm', 1, 2),
-(3, 'Grace McGinty', 2, 1), (4, 'Josh Govota', 3, 2);
+INSERT INTO employee(username, schedule_num, lot_id) VALUES
+('NicoleSood', 1, 1), ('TrevorDohm', 1, 2),
+('GraceMcGinty', 2, 1), ('JoshGovota', 3, 2);
 -- Note: There is also a lot 3 and 4, defined above.
 
-INSERT INTO parking_spot(spot_num, is_available, is_handicap, employee_id, employee_name, lot_id) VALUES
-(101, false, true, 1, 'Nicole Sood', 1), (102, false, false, 1, 'Nicole Sood', 1),
-(103, true, true, 1, 'Nicole Sood', 1), (104, true, false, 1, 'Nicole Sood', 1),
-(105, true, true, 1, 'Nicole Sood', 1), (106, true, false, 1, 'Nicole Sood', 1)  ;
+INSERT INTO parking_spot(spot_num, is_available, is_handicap, employee_username, lot_id) VALUES
+(101, false, true, 'NicoleSood', 1), (102, false, false, 'NicoleSood', 1),
+(103, true, true, 'NicoleSood', 1), (104, true, false, 'NicoleSood', 1),
+(105, true, true, 'NicoleSood', 1), (106, true, false, 'NicoleSood', 1)  ;
 
-INSERT INTO parking_spot(spot_num, is_available, is_handicap, employee_id, employee_name, lot_id) VALUES
-(201, false, true, 2, 'Trevor Dohm', 2), (202, false, false, 2, 'Trevor Dohm', 2),
-(203, false, true, 2, 'Trevor Dohm', 2), (204, false, false, 2, 'Trevor Dohm', 2),
-(205, false, true, 2, 'Trevor Dohm', 2), (206, false, false, 2, 'Trevor Dohm', 2);
+INSERT INTO parking_spot(spot_num, is_available, is_handicap, employee_username, lot_id) VALUES
+(201, false, true, 'TrevorDohm', 2), (202, false, false, 'TrevorDohm', 2),
+(203, false, true, 'TrevorDohm', 2), (204, false, false, 'TrevorDohm', 2),
+(205, false, true, 'TrevorDohm', 2), (206, false, false, 'TrevorDohm', 2);
 
-INSERT INTO ticket(ticket_num, price, event_id, lot_id) VALUES
-(1, 88.00, 1, 1), (2, 76.98, 1, 1), (3, 149.98, 2, 2);
+INSERT INTO ticket(price, event_id, lot_id) VALUES
+(88.00, 1, 1), (76.98, 1, 1), (149.98, 2, 2);
 
 INSERT INTO vehicle(license, type, lot_id, spot_num) VALUES
 ('MB34HGL', 'Van', 1, 101), ('LR64NDK', 'SUV', 2, 202),

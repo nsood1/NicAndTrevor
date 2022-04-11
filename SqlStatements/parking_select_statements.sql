@@ -25,7 +25,7 @@ JOIN event e on parking_spot.lot_id = e.stadium_id AND e.id = 2
 AND parking_spot.is_available = false;
 
 -- 7:What employees occupy lot 2 at Rodeo Stadium?
-SELECT name, schedule_num FROM employee
+SELECT username, schedule_num FROM employee
 WHERE lot_id = 2;
 -- Note: Stadium 1, Lot 2. This will be the one with 5000 Spots.
 
