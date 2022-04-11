@@ -1,8 +1,8 @@
-const knex = require('../database/knex');
-const SESSION_TABLE = 'employee';
+const knex = require('../middleware/knex');
+const EMPLOYEE_TABLE = 'employee';
 
-const findByName = async (name) => {
-    const query = knex(SESSION_TABLE).where({ name });
+const findByName = async (name, password) => {
+    const query = knex(EMPLOYEE_TABLE).where({ name });
     const result = await query;
     return result;
 }

@@ -12,6 +12,7 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
+        console.log(body);
         const result = await EmployeeController.authenticateEmployee(body.name, body.password);
         res.status(201).json(result);
     } catch (err) {

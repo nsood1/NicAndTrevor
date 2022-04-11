@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
-const Employees = require('../models/employee');
+const Employee = require('../models/employee');
 
 const accessTokenSecret = 'mysupercoolsecret';
 
 const authenticateEmployee = async (name, password) => {
-    const employees = await Employees.authenticateEmployee(name, password);
+    const employees = await Employee.authenticateEmployee(name, password);
     if (employees === null) {
         return employees;
     }

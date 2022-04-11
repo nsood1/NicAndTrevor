@@ -13,10 +13,10 @@ router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
         console.log(body);
-        const result = await req.models.user.createNewUser(body.email, body.password);
+        const result = await req.models.user.createNewEmployee(body.name, body.password);
         res.status(201).json(result);
     } catch (err) {
-        console.error('Failed to create new user:', err);
+        console.error('Failed to create new employee:', err);
         res.status(500).json({ message: err.toString() });
     }
 

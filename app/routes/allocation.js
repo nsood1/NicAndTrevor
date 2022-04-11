@@ -13,7 +13,7 @@ router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
         console.log(body);
-        const result = await req.models.Employee.allocationData(body.spot_num, body.license);
+        const result = await Employee.allocationData(body.spot_num, body.license);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed :( ', err);
@@ -27,7 +27,7 @@ router.put('/', async (req, res, next) => {
     try {
         const body = req.body;
         console.log(body);
-        const result = await req.models.Employee.createNewVechicle(body.license, body.type, body.spot_num, body.lot_id);
+        const result = await Employee.createNewVechicle(body.license, body.type, body.spot_num, body.lot_id);
         res.status(201).json(result);
     } catch (err) {
         console.error('Failed :( ', err);
@@ -41,7 +41,7 @@ router.delete('/', async(req, res, next) => {
     try{
         const body = req.body;
         console.log(body);
-        const result = await req.models.Employee.deleteVec(body.license);
+        const result = await Employee.deleteVec(body.license);
         result.delete;
         res.status(201).json(result);
 

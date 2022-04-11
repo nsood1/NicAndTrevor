@@ -8,7 +8,7 @@ const allocationRoutes = require('./routes/allocation');
 const spotsRoutes = require('./routes/spots')
 
 // Import any middleware here
-const { upConnection, downConnection, requestLogs } = require('./middleware/connect');
+//const { upConnection, downConnection, requestLogs } = require('./middleware/knex');
 const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth');
 
 // Port 3000 Since SQL Runs 3306
@@ -27,7 +27,7 @@ app.get('/health', (request, response, next) => {
 app.use('/session', sessionRoutes);
 app.use('/account', employeeRoutes);
 app.use('/allocation', allocationRoutes)
-app.use('/spots', spotsRoutes);
+// app.use('/spots', spotsRoutes);
 
 // App Configured, Listen for Requests
 app.listen(port, () => {
