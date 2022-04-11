@@ -1,16 +1,15 @@
 const express = require('express');
-const EmployeeController = require('../controllers/spots');
+const EmployeeController = require('../models/spots');
+
 const router = express.Router();
 
-
-
-router.GET('/', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const body = req.body;
         console.log(body);
 
         if (body.stadium_ID){
-            const result = await EmployeeController.statdiumAllocation(body.stadium_ID);
+            const result = await EmployeeController.stadiumAllocation(body.stadium_ID);
         }
 
         if (body.lot_id){
@@ -22,7 +21,7 @@ router.GET('/', async (req, res, next) => {
         }
         res.status(201).json(result);
     } catch (err) {
-        console.error('Failed to create new employee:', err);
+        console.error('Failed to query spots:', err);
         res.status(500).json({ message: err.toString() });
     }
     next();

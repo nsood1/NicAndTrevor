@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 const EMPLOYEE_TABLE = 'employee';
 
-const createNewEmployee = async (name, password) => {
+const createNewEmployee = async (username, password) => {
 
     // Hash Password with Bcrypt
     console.log('Raw password:', password);
@@ -12,25 +12,25 @@ const createNewEmployee = async (name, password) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     console.log('Hashed password', hashedPassword);
 
-    // Create New Employee With Name, Password
-    const query = knex(EMPLOYEE_TABLE).insert({ name, password: hashedPassword });
+    // Create New Employee With UserName, Password
+    const query = knex(EMPLOYEE_TABLE).insert({ username, password: hashedPassword });
     console.log('Raw query for createNewEmployee:', query.toString());
     const result = await query;
     return result;
 
 };
 
-const findByName = async (name) => {
-    const query = knex(EMPLOYEE_TABLE).where({ name });
+const findByUserName = async (username) => {
+    const query = knex(EMPLOYEE_TABLE).where({ username });
     const result = await query;
     return result;
 }
 
-const authenticateEmployee = async (name, password) => {
-    const employees = await findByName(name);
+const authenticateEmployee = async (username, password) => {
+    const employees = await findByUserName(username);
     console.log('Results of employee query', employees);
     if (employees.length === 0) {
-        console.error(`No employees with name: ${name}`);
+        console.error(`No employees with username: ${username}`);
         return null;
     }
     const employee = employees[0];
@@ -44,6 +44,6 @@ const authenticateEmployee = async (name, password) => {
 
 module.exports = {
     createNewEmployee,
-    findByName,
+    findByUserName,
     authenticateEmployee
 };
