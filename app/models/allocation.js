@@ -1,4 +1,4 @@
-const knex = require('../database/knex');
+const knex = require('../middleware/knex');
 
 const ALLOCATION_TABLE = 'vehicle';
 
@@ -23,10 +23,16 @@ const createNewVechicle = async (license, type, spot_num, lot_id) => {
     return result;
 };
 
-
+const deleteVec = async(license) => {
+    console.log('licence' , license);
+    const query = knex(ALLOCATION_TABLE).where({license});
+    const result = await query;
+    return result;
+}
 
 
 module.exports = {
     allocationData,
-    createNewVechicle
+    createNewVechicle,
+    deleteVec
 };

@@ -37,12 +37,20 @@ router.put('/', async (req, res, next) => {
     next();
 })
 
-router.delete('/', async(req, res, next)=> {
+router.delete('/', async(req, res, next) => {
     try{
+        const body = req.body;
+        console.log(body);
+        const result = await req.models.Employee.deleteVec(body.license);
+        result.delete;
+        res.status(201).json(result);
 
     } catch(err){
-
+        console.error('Failed :( ', err);
+        res.status(500).json({ message: err.toString() });
     }
+
+    next();
 })
 
 module.exports = router;
