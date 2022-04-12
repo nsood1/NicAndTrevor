@@ -13,8 +13,7 @@ const router = express.Router();
 router.post('/account', async (req, res, next) => {
     try {
         const body = req.body;
-        console.log(body);
-        result = await Employee.createNewEmployee(body.username, body.password);
+        const result = await Employee.createNewEmployee(body.username, body.password);
         //  if(result.success) {
         //     result = await Employee.findByUserName(body.username);
         //     res.status(201).json(result); } 

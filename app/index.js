@@ -1,13 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// Import any route handlers here
-// const employeeRoutes = require('./routes/account');
+// Import Route Handlers Here
 const sessionRoutes = require('./routes/session');
 const spotsRoutes = require('./routes/spots')
 const allocationRoutes = require('./routes/allocation');
 
-// Import any middleware here
+// Import Middleware Here
 const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth');
 
 // Port 3000 Since SQL Runs 3306

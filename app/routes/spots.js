@@ -6,7 +6,6 @@ const router = express.Router();
 router.get('/spots', async (req, res, next) => {
  
     try {
-        console.log(body);
         const body = req.query;
         let result; 
         if (body.stadium_ID){
