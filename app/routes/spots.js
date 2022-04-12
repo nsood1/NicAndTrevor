@@ -4,20 +4,23 @@ const EmployeeController = require('../models/spots');
 const router = express.Router();
 
 router.get('/StaLotAv', async (req, res, next) => {
+ 
     try {
-        const body = req.body;
         console.log(body);
-
+        let result; 
         if (body.stadium_ID){
-            const result = await EmployeeController.stadiumAllocation(body.stadium_ID);
+            result = await EmployeeController.stadiumAllocation(body.stadium_ID);
+            response.json(results);
         }
 
         if (body.lot_id){
-            const result = await EmployeeController.lotAllocation(body.lot_id);
+            result = await EmployeeController.lotAllocation(body.lot_id);
+            response.json(results);
         }
 
         if (body.is_available){
-            const result = await EmployeeController.avalAllocation(body.is_available);
+            result = await EmployeeController.avalAllocation(body.is_available);
+            response.json(results);
         }
         res.status(201).json(result);
     } catch (err) {
