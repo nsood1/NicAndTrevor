@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 // Import any route handlers here
 // const employeeRoutes = require('./routes/account');
 const sessionRoutes = require('./routes/session');
-const allocationRoutes = require('./routes/allocation');
 const spotsRoutes = require('./routes/spots')
+const allocationRoutes = require('./routes/allocation');
 
 // Import any middleware here
 const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth');
@@ -24,9 +24,8 @@ app.get('/health', (request, response, next) => {
 });
 
 app.use(sessionRoutes);
-
+app.use(authenticateJWT, spotsRoutes);
 app.use('/allocation', authenticateJWT, allocationRoutes)
-app.use('/spots', authenticateJWT, spotsRoutes);
 
 // App Configured, Listen for Requests
 app.listen(port, () => {

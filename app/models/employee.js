@@ -5,12 +5,12 @@ const EMPLOYEE_TABLE = 'employee';
 
 const createNewEmployee = async (username, password) => {
 
-    if (!username || !password) {
-        return {
-            success: false,
-            message: 'Username and Password Required'
-        }
-    }
+    // if (!username || !password) {
+    //     return {
+    //         success: false,
+    //         message: 'Username and Password Required'
+    //     }
+    // }
 
     // Hash Password with Bcrypt
     console.log('Raw password:', password);
@@ -22,8 +22,8 @@ const createNewEmployee = async (username, password) => {
     // Create New Employee With UserName, Password
     const query = knex(EMPLOYEE_TABLE).insert({ username, password: hashedPassword });
     console.log('Raw query for createNewEmployee:', query.toString());
-    result = await query;
-    result['success'] = true;
+    const result = await query;
+    // result['success'];
     return result;
 
 };

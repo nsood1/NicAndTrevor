@@ -3,7 +3,7 @@ const EmployeeController = require('../models/spots');
 
 const router = express.Router();
 
-router.get('/StaLotAv', async (req, res, next) => {
+router.get('/spots', async (req, res, next) => {
  
     try {
         console.log(body);
@@ -30,7 +30,7 @@ router.get('/StaLotAv', async (req, res, next) => {
     next();
 })
 
-router.get('/employee', async (req, res, next)  => {
+router.get('/session', async (req, res, next)  => {
     try {
         const token = req.token;
         // const result = await Employee.findByUserName(employee.username);

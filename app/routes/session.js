@@ -15,14 +15,11 @@ router.post('/account', async (req, res, next) => {
         const body = req.body;
         console.log(body);
         result = await Employee.createNewEmployee(body.username, body.password);
-         if(result.success) {
-            result = await Employee.findByUserName(body.username);
-            res.status(201).json(result);
-         } 
-         else {
-              res.status(400).json(result);
-         }
-        res.status(201).json(result[0]);
+        //  if(result.success) {
+        //     result = await Employee.findByUserName(body.username);
+        //     res.status(201).json(result); } 
+        //  else { res.status(400).json(result); }
+        res.status(201).json(result);
     } catch (err) {
         console.error('Failed to create new employee:', err);
         res.status(400).json({ message: err.toString() });
