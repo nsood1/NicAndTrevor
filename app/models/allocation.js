@@ -23,9 +23,9 @@ const createNewVechicle = async (license, type, spot_num, lot_id) => {
     return result;
 };
 
-const deleteVec = async(license) => {
-    console.log('licence' , license);
-    const query = knex(ALLOCATION_TABLE).del().where({license});
+const deleteVec = async(allocation_id) => {
+    console.log('allocation_id' , allocation_id);
+    const query = knex(ALLOCATION_TABLE).del().where({allocation_id});
     const result = await query;
     return result;
 }

@@ -39,7 +39,7 @@ router.put('/', async (req, res, next) => {
 router.delete('/', async(req, res, next) => {
     try{
         const body = req.query;
-        const result = await Employee.deleteVec(body.license);
+        const result = await Employee.deleteVec(body.allocation_id);
         result.delete;
         res.status(201).json(result);
 
