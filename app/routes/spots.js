@@ -7,6 +7,7 @@ router.get('/spots', async (req, res, next) => {
  
     try {
         console.log(body);
+        const body = req.query;
         let result; 
         if (body.stadium_ID){
             result = await EmployeeController.stadiumAllocation(body.stadium_ID);
