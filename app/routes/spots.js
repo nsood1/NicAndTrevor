@@ -6,22 +6,18 @@ const router = express.Router();
 router.get('/spots', async (req, res, next) => {
  
     try {
-        console.log(body);
         const body = req.query;
         let result; 
         if (body.stadium_ID){
             result = await EmployeeController.stadiumAllocation(body.stadium_ID);
-            response.json(result);
         }
 
         if (body.lot_id){
             result = await EmployeeController.lotAllocation(body.lot_id);
-            response.json(result);
         }
 
         if (body.is_available){
             result = await EmployeeController.avalAllocation(body.is_available);
-            response.json(result);
         }
         res.status(201).json(result);
     } catch (err) {

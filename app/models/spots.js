@@ -3,8 +3,8 @@ const knex = require('../middleware/knex');
 const SPOTS_TABLE = 'parking_spot';
 const EVENTS_TABLE = 'parking_lot'
 
-const stadiumAllocation = async (stadiumID) => {
-    const query = knex(EVENTS_TABLE).where({ stadiumID });
+const stadiumAllocation = async (stadium_ID) => {
+    const query = knex(EVENTS_TABLE).where({ stadium_ID });
     const result = await query;
     return result;
 }
