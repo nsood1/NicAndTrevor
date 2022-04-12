@@ -13,11 +13,18 @@ router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
         console.log(body);
-        const result = await Employee.createNewEmployee(body.username, body.password);
-        res.status(201).json(result);
+        result = await Employee.createNewEmployee(body.username, body.password);
+         if(result.success) {
+            result = await Employee.findByUserName(body.username);
+            res.status(201).json(result);
+         } 
+         else {
+              res.status(400).json(result);
+         }
+        res.status(201).json(result[0]);
     } catch (err) {
         console.error('Failed to create new employee:', err);
-        res.status(500).json({ message: err.toString() });
+        res.status(400).json({ message: err.toString() });
     }
 
     next();

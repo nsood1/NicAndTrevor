@@ -1,5 +1,6 @@
 const express = require('express');
 const EmployeeController = require('../controllers/employee');
+const Employee = require('../models/employee');
 
 /**
  * https://expressjs.com/en/guide/routing.html#express-router
@@ -9,7 +10,28 @@ const EmployeeController = require('../controllers/employee');
 
 const router = express.Router();
 
-router.post('/', async (req, res, next) => {
+router.post('/account', async (req, res, next) => {
+    try {
+        const body = req.body;
+        console.log(body);
+        result = await Employee.createNewEmployee(body.username, body.password);
+         if(result.success) {
+            result = await Employee.findByUserName(body.username);
+            res.status(201).json(result);
+         } 
+         else {
+              res.status(400).json(result);
+         }
+        res.status(201).json(result[0]);
+    } catch (err) {
+        console.error('Failed to create new employee:', err);
+        res.status(400).json({ message: err.toString() });
+    }
+
+    next();
+})
+
+router.post('/session', async (req, res, next) => {
     try {
         const body = req.body;
         console.log(body);
@@ -20,18 +42,6 @@ router.post('/', async (req, res, next) => {
         res.status(500).json({ message: err.toString() });
     }
     next();
-})
-
-
-router.get('/', async (req, res, next)  => {
-    try {
-        const employee = req.employee;
-        const result = await Employee.findByUserName(employee.username);
-        res.status(201).json(result);
-    } catch (err) {
-        console.error('Failed to load current employee:', err);
-        res.sendStatus(500).json({ message: err.toString() });
-    }
 })
 
 module.exports = router;

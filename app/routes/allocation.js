@@ -16,10 +16,9 @@ router.post('/', async (req, res, next) => {
         const result = await Employee.allocationData(body.spot_num, body.license);
         res.status(201).json(result);
     } catch (err) {
-        console.error('Failed :( ', err);
+        console.error('Could Not Allocate Spot ', err);
         res.status(500).json({ message: err.toString() }); 
     }
-
     next();
 })
 

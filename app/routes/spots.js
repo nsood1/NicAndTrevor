@@ -26,3 +26,17 @@ router.get('/', async (req, res, next) => {
     }
     next();
 })
+
+router.get('/', async (req, res, next)  => {
+    try {
+        const token = req.token;
+        // const result = await Employee.findByUserName(employee.username);
+        console.log(token);
+        res.status(201).json(result);
+    } catch (err) {
+        console.error('Failed to load current employee:', err);
+        res.sendStatus(500).json({ message: err.toString() });
+    }
+})
+
+module.exports = router;
