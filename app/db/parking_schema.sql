@@ -54,7 +54,8 @@ CREATE TABLE ticket(
 );
 
 CREATE TABLE vehicle(
-    license VARCHAR(30) PRIMARY KEY,
+    allocation_id INTEGER PRIMARY KEY,
+    license VARCHAR(30),
     type VARCHAR(30), -- Coupe, Sedan, Hatchback, SUV, Minivan, Van, Truck, RV
     lot_id INTEGER REFERENCES parking_lot(id),
     spot_num INTEGER REFERENCES parking_spot(spot_num)
@@ -65,7 +66,6 @@ CREATE TABLE fan(
     name VARCHAR(100),
     car_license VARCHAR(30) NOT NULL,
     car_type VARCHAR(30) NOT NULL,
-    FOREIGN KEY (car_license) REFERENCES vehicle(license),
     ticket_num INTEGER REFERENCES ticket(ticket_num)
 );
 
@@ -106,9 +106,9 @@ INSERT INTO parking_spot(spot_num, is_available, is_handicap, employee_username,
 INSERT INTO ticket(price, event_id, lot_id) VALUES
 (88.00, 1, 1), (76.98, 1, 1), (149.98, 2, 2);
 
-INSERT INTO vehicle(license, type, lot_id, spot_num) VALUES
-('MB34HGL', 'Van', 1, 101), ('LR64NDK', 'SUV', 2, 202),
-('NLF16LB', 'Truck', 1, 102), ('LB06NGL', 'RV', 2, 201);
+INSERT INTO vehicle(allocation_id, license, type, lot_id, spot_num) VALUES
+(1, 'MB34HGL', 'Van', 1, 101), (2, 'LR64NDK', 'SUV', 2, 202),
+(3, 'NLF16LB', 'Truck', 1, 102), (4, 'LB06NGL', 'RV', 2, 201);
 
 INSERT INTO fan(ssn, name, car_license, car_type, ticket_num) VALUES
 (1111, 'Elizabeth Windsor', 'NLF16LB', 'Truck', 1),
