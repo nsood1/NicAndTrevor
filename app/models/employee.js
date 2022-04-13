@@ -34,12 +34,14 @@ const createNewEmployee = async (username, password) => {
 
 };
 
+// Find Specified Employee
 const findByUserName = async (username) => {
     const query = knex(EMPLOYEE_TABLE).where({ username });
     const result = await query;
     return result;
 }
 
+// Authenticate Employee
 const authenticateEmployee = async (username, password) => {
     const employees = await findByUserName(username);
     console.log('Results of employee query', employees);

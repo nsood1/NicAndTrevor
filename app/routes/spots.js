@@ -1,7 +1,19 @@
 const express = require('express');
-const EmployeeController = require('../models/spots');
+const Spots = require('../models/spots');
+const Employee = require('../models/employee');
 
 const router = express.Router();
+
+// If Token, Get Username (User = Token)
+router.get('/session', async (req, res, next)  => {
+    try {
+        const user = req.user;
+        const result = await Employee.findByUserName(user.username);
+        return res.status(200).json(result);
+    } catch (err) {
+        return res.sendStatus(401).json({ message: 'Bad Token' });
+    }
+})
 
 router.get('/spots', async (req, res, next) => {
  
@@ -25,18 +37,6 @@ router.get('/spots', async (req, res, next) => {
         res.status(500).json({ message: err.toString() });
     }
     next();
-})
-
-router.get('/session', async (req, res, next)  => {
-    try {
-        const token = req.token;
-        // const result = await Employee.findByUserName(employee.username);
-        console.log(token);
-        res.status(201).json(result);
-    } catch (err) {
-        console.error('Failed to load current employee:', err);
-        res.sendStatus(500).json({ message: err.toString() });
-    }
 })
 
 module.exports = router;

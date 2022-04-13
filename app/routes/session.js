@@ -30,6 +30,8 @@ router.post('/session', async (req, res, next) => {
     try {
         const body = req.body;
         const result = await EmployeeController.authenticateEmployee(body.username, body.password);
+        if (result == null) {
+            return res.status(401).json({ message: 'Body Does Not Match Existing Credentials' }); }
         return res.status(201).json(result);
     } catch (err) {
         return res.status(401).json({ message: 'Body Does Not Match Existing Credentials' });
