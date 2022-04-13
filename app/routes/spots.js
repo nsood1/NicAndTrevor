@@ -15,8 +15,8 @@ router.get('/session', async (req, res, next)  => {
     }
 })
 
+// If Token, Find Spots (Query Parameters)
 router.get('/spots', async (req, res, next) => {
- 
     try {
         const body = req.query;
         let result; 
@@ -31,7 +31,7 @@ router.get('/spots', async (req, res, next) => {
         if (body.is_available){
             result = await EmployeeController.avalAllocation(body.is_available);
         }
-        res.status(201).json(result);
+        res.status(200).json(result);
     } catch (err) {
         console.error('Failed to query spots:', err);
         res.status(500).json({ message: err.toString() });

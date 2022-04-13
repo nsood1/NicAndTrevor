@@ -12,15 +12,21 @@ const router = express.Router();
 // Accepts License, Spot_Num
 // -> Creates Vehicle if Doesn't Exist
 // -> Updates Existing Vehicle
+// If Neither, Throw Exception
 router.post('/', async (req, res, next) => {
+    const body = req.body;
     try {
-        const body = req.body;
-        const result = await Allocation.createVehicle(body.license, body.spot_num);
-        return res.status(201).json(result);
+        result = await Allocation.createVehicle(body.license, body.spot_num);
+        result = await Allocation.allocationData(body.license);
+        return res.status(201).json(result[0]);
     } catch (err) {
-        const body = req.body;
-        const result = await Allocation.updateVehicle(body.license, body.spot_num);
-        return res.status(201).json(result); 
+        try {
+            result = await Allocation.updateVehicle(body.license, body.spot_num);
+            result = await Allocation.allocationData(body.license);
+            return res.status(201).json(result[0]); 
+        } catch (err) {
+            return res.status(401).json({ message: 'Missing License/Spot Number' });
+        }
     }
     next();
 })
