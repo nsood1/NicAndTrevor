@@ -44,7 +44,7 @@ router.get('/spots', async (req, res, next) => {
         
     } catch (err) {
         console.error('Failed to query spots:', err);
-        res.status(500).json({ message: err.toString() });
+        res.status(401).json({ message: err.toString() });
     }
     next();
 })
