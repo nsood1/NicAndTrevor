@@ -80,12 +80,12 @@ router.delete('/:spot_num?', async(req, res, next) => {
         // Check If Spot Not Allocated, Throw Exception If
         result = await Allocation.requestSpot(params.spot_num);
         if (Object.keys(result).length == 0) {
-            return res.status(401).json({ message: 'Unallocated Spot Number (Integer)' }); }
+            return res.status(401).json({ message: 'Unallocated Spot Number' }); }
 
         result = await Allocation.deleteVehicle(params.spot_num);
         return res.status(204).json(result);
     } catch (err) {
-        return res.status(401).json({ message: 'Missing Spot Number (Integer)' });
+        return res.status(401).json({ message: 'Missing Spot Number' });
     }
     next();
 })

@@ -36,7 +36,6 @@ const updateVehicle = async (license, spot_num) => {
 const deleteVehicle = async(spot_num) => {
     const query = knex(VEHICLE_TABLE).where({ spot_num }).update({ spot_num: null });
     result = await query;
-    result['success'] = true;
     return result;
 }
 
