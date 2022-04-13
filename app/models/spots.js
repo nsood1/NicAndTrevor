@@ -22,13 +22,13 @@ const avalAllocation = async (is_available) => {
 }
 
 const filterStadiumLot = async (stadium_ID, lot_id) => {
-    const query = knex(SPOTS_TABLE).where({stadium_ID}).union({lot_id});
+    const query = knex(EVENTS_TABLE).where({stadium_ID}).join(SPOTS_TABLE).where({lot_id});
     const result = await query;
     return result;
 } 
 
 const andOrAllocation = async(stadium_ID, lot_id, is_available) => {
-    const query = knex(SPOTS_TABLE).where({stadium_ID}).union({lot_id}).union({is_available});
+    const query = knex(SPOTS_TABLE).where({stadium_ID}).join(SPOTS_TABLE).where({lot_id, is_available});
     const result = await query;
     return result;
 }
