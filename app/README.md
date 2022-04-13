@@ -5,7 +5,8 @@
 **Professor:** Professor Ayala</br>
 **Course:** Database Concepts</br>
 
-**Names:** Trevor Dohm And Nicole Sood</br>
+**Name:** Trevor Dohm</br>
+**Name:** Nicole Sood</br>
 **Date:** 4 / 13 / 2022</br>
 
 # Project Description
@@ -22,6 +23,9 @@ For this project, we created a small express application to reflect the parking 
 ## Working In Project
 
 - Now that the project is (hopefully) running on your computer, you must first run a post account and a post session in your REST client (we use Insomnia) with the same username and password for each. This is the process of creating an account and getting a token, or login, for the account. See Pictures Below:
+
+<img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(56).png"></br>
+<img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(57).png"></br>
 
 - So... what exactly can you do with this app? We already discussed these two:
 
@@ -48,3 +52,8 @@ Accepts License, Spot_Num</br>
 
 - Here are the pictures of 3 - 7!
 
+<img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(58).png"></br>
+STILL NEED TO ADD
+<img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(59).png"></br>
+<img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(60).png"></br>
+<img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(61).png"></br>
