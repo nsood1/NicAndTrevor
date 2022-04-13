@@ -13,15 +13,13 @@ const router = express.Router();
 router.post('/account', async (req, res, next) => {
     try {
         const body = req.body;
-        const result = await Employee.createNewEmployee(body.username, body.password);
-        //  if(result.success) {
-        //     result = await Employee.findByUserName(body.username);
-        //     res.status(201).json(result); } 
-        //  else { res.status(400).json(result); }
-        return res.status(201).json(result);
+        result = await Employee.createNewEmployee(body.username, body.password);
+         if (result.success) {
+            result = await Employee.findByUserName(body.username);
+            return res.status(201).json(result[0]); } 
+         else { return res.status(400).json(result); }
     } catch (err) {
-        console.error('Failed to create new employee:', err);
-        return res.status(400).json({ message: err.toString() });
+        return res.status(400).json({ message: 'Duplicate Entry' });
     }
     next();
 })
