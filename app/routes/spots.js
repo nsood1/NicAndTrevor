@@ -17,34 +17,25 @@ router.get('/session', async (req, res, next)  => {
 
 // If Token, Find Spots (Query Parameters)
 router.get('/spots', async (req, res, next) => {
+    const query = req.query;
+    let result; 
+
     try {
-        const body = req.query;
-        let result; 
 
-        if (body.stadium_ID, body.lot_id, body.avalAllocation){
-            result = await EmployeeController.andOrAllocation(body.stadium_ID, body.lot_id, body.is_available);
-        }
-        
-        else if (body.stadium_ID, body.lot_id){
-            result = await EmployeeController.filterStadiumLot(body.stadium_ID, body.lot_id);
-        }
+        if (query.stadium_id, query.lot_id, query.is_available) {
+            result = await Spots.andOrAllocation(query.stadium_id, query.lot_id, query.is_available);
+        } else if (query.stadium_id, query.lot_id) {
+            result = await Spots.filterStadiumLot(query.stadium_ID, query.lot_id);
+        } else if (query.stadium_id) { 
+            result = await Spots.stadiumAllocation(query.stadium_id);
+        } else if (query.lot_id) {
+            result = await Spots.lotAllocation(query.lot_id);
+        } else if (query.is_available) {
+            result = await Spots.avalAllocation(query.is_available);
+        } res.status(200).json(result); 
 
-        else if (body.stadium_ID){
-            result = await EmployeeController.stadiumAllocation(body.stadium_ID);
-        }
-
-        else if (body.lot_id){
-            result = await EmployeeController.lotAllocation(body.lot_id);
-        }
-
-        else if (body.is_available){
-            result = await EmployeeController.avalAllocation(body.is_available);
-        }
-        res.status(200).json(result);
-        
     } catch (err) {
-        console.error('Failed to query spots:', err);
-        res.status(500).json({ message: err.toString() });
+        res.status(401).json({ message: 'Failed Query' });
     }
     next();
 })

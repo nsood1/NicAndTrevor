@@ -10,48 +10,82 @@ const Allocation = require('../models/allocation');
 const router = express.Router();
 
 // Accepts License, Spot_Num
+// -> Null Existing Spot_Num
 // -> Creates Vehicle if Doesn't Exist
 // -> Updates Existing Vehicle
-// If Neither, Throw Exception
+// If None, Throw Exception
 router.post('/', async (req, res, next) => {
     const body = req.body;
+
+    // Null Other Object (If Exists)
+    result = await Allocation.requestSpot(body.spot_num);
+    if (Object.keys(result).length != 0) {
+        result = await Allocation.deleteVehicle(body.spot_num); }
+
     try {
         result = await Allocation.createVehicle(body.license, body.spot_num);
-        result = await Allocation.allocationData(body.license);
+        result = await Allocation.requestVehicle(body.license);
         return res.status(201).json(result[0]);
     } catch (err) {
         try {
             result = await Allocation.updateVehicle(body.license, body.spot_num);
-            result = await Allocation.allocationData(body.license);
+            result = await Allocation.requestVehicle(body.license);
             return res.status(201).json(result[0]); 
         } catch (err) {
-            return res.status(401).json({ message: 'Missing License/Spot Number' });
+            return res.status(401).json({ message: 'Missing License / Spot Number' });
         }
     }
     next();
 })
 
-router.put('/', async (req, res, next) => {
+// Accepts License, Spot_Num
+// -> Null Existing Spot_Num
+// -> Creates Vehicle if Doesn't Exist
+// -> Updates Existing Vehicle
+// If None, Throw Exception
+router.put('/:spot_num?', async (req, res, next) => {
+    const body = req.body;
+    const params = req.params;
+
+    // Null Other Object (Extra Error Handling For Param)
     try {
-        const body = req.body;
-        const result = await Allocation.updateVechicle(body.license, body.spot_num);
-        return res.status(201).json(result);
+        result = await Allocation.requestSpot(params.spot_num);
+        if (Object.keys(result).length != 0) {
+            result = await Allocation.deleteVehicle(params.spot_num); }
+    } catch (err) { return res.status(401).json({ message: 'Missing Spot Number' }); }
+
+    try {
+        result = await Allocation.createVehicle(body.license, params.spot_num);
+        result = await Allocation.requestVehicle(body.license);
+        return res.status(200).json(result[0]);
     } catch (err) {
-        console.error('Could Not Update Spot:', err);
-        return res.status(401).json({ message: err.toString() });
+        try {
+            result = await Allocation.updateVehicle(body.license, params.spot_num);
+            result = await Allocation.requestVehicle(body.license);
+            return res.status(200).json(result[0]); 
+        } catch (err) {
+            return res.status(401).json({ message: 'Missing License Number' });
+        }
     }
     next();
 })
 
-router.delete('/', async(req, res, next) => {
+// Delete Spot Number (Make Null, Doesn't Delete Vehicle)
+// Note: In Our Implementation, Allocation Spot Is Inside
+// Vehicle Table, So We Set Spot_Num To Null Instead!
+router.delete('/:spot_num?', async(req, res, next) => {
     try{
-        const body = req.query;
-        const result = await Employee.deleteVec(body.spot_num);
-        result.delete;
-        return res.status(201).json(result);
-    } catch(err){
-        console.error('Could Not Delete Spot:', err);
-        return res.status(401).json({ message: err.toString() });
+        const params = req.params;
+
+        // Check If Spot Not Allocated, Throw Exception If
+        result = await Allocation.requestSpot(params.spot_num);
+        if (Object.keys(result).length == 0) {
+            return res.status(401).json({ message: 'Unallocated Spot Number' }); }
+
+        result = await Allocation.deleteVehicle(params.spot_num);
+        return res.status(204).json(result);
+    } catch (err) {
+        return res.status(401).json({ message: 'Missing Spot Number' });
     }
     next();
 })
