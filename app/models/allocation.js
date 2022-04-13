@@ -2,37 +2,42 @@ const knex = require('../middleware/knex');
 
 const ALLOCATION_TABLE = 'vehicle';
 
-const allocationData = async (spot_num, license) => {
-    const query = knex(ALLOCATION_TABLE).where({ spot_num, license });
+// Finds Allocation of Vehicle
+const allocationData = async (license) => {
+    const query = knex(ALLOCATION_TABLE).where({ license });
+    console.log('Search Query:', query.toString());
     const result = await query;
     return result;
 }
 
-
-const createNewVechicle = async (license, type, spot_num, lot_id) => {
-    console.log('Licesnse:', license);
-    console.log('type', type);
-    console.log('spot_num', spot_num);
-    console.log('lot_id', lot_id);
-
-
-    const query = knex(ALLOCATION_TABLE).insert({ license, type, spot_num, lot_id });
-    console.log('Raw query for insert a new vechicle:', query.toString());
+// Creates New Vehicle With Allocation (Spot Number)
+const createVehicle = async (license, spot_num) => {
+    const query = knex(ALLOCATION_TABLE).insert({ license, spot_num });
+    console.log('Insert Query:', query.toString());
     const result = await query;
-
     return result;
 };
 
-const deleteVec = async(allocation_id) => {
-    console.log('allocation_id' , allocation_id);
-    const query = knex(ALLOCATION_TABLE).del().where({allocation_id});
+// Updates Vehicle With New Allocation (Spot Number)
+const updateVehicle = async (license, spot_num) => {
+    const query = knex(ALLOCATION_TABLE).where({ license }).update({ spot_num });
+    console.log('Update Query:', query.toString());
+    const result = await query;
+    return result;
+};
+
+// Deletes Allocation Number (Spot Number)
+const deleteVehicle = async(spot_num) => {
+    const query = knex(ALLOCATION_TABLE).del().where({ spot_num });
+    console.log('Delete Query:', query.toString());
     const result = await query;
     return result;
 }
 
-
+// Ay Look Its CRUD
 module.exports = {
     allocationData,
-    createNewVechicle,
-    deleteVec
+    createVehicle,
+    updateVehicle,
+    deleteVehicle
 };

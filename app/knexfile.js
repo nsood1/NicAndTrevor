@@ -1,4 +1,4 @@
-// Update with your config settings.
+// Update With Your Config Settings
 
 module.exports = {
   development: {

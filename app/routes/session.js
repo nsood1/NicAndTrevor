@@ -23,7 +23,6 @@ router.post('/account', async (req, res, next) => {
         console.error('Failed to create new employee:', err);
         return res.status(400).json({ message: err.toString() });
     }
-
     next();
 })
 

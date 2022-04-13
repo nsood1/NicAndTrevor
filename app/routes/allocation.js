@@ -1,5 +1,5 @@
 const express = require('express');
-const Employee = require('../models/allocation');
+const Allocation = require('../models/allocation');
 
 /**
  * https://expressjs.com/en/guide/routing.html#express-router
@@ -9,15 +9,18 @@ const Employee = require('../models/allocation');
 
 const router = express.Router();
 
+// Accepts License, Spot_Num
+// -> Creates Vehicle if Doesn't Exist
+// -> Updates Existing Vehicle
 router.post('/', async (req, res, next) => {
     try {
         const body = req.body;
-        console.log(body);
-        const result = await Employee.allocationData(body.spot_num, body.license);
-        res.status(201).json(result);
+        const result = await Allocation.createVehicle(body.license, body.spot_num);
+        return res.status(201).json(result);
     } catch (err) {
-        console.error('Could Not Allocate Spot ', err);
-        res.status(500).json({ message: err.toString() }); 
+        const body = req.body;
+        const result = await Allocation.updateVehicle(body.license, body.spot_num);
+        return res.status(201).json(result); 
     }
     next();
 })
@@ -25,29 +28,25 @@ router.post('/', async (req, res, next) => {
 router.put('/', async (req, res, next) => {
     try {
         const body = req.body;
-        console.log(body);
-        const result = await Employee.createNewVechicle(body.license, body.type, body.spot_num, body.lot_id);
-        res.status(201).json(result);
+        const result = await Allocation.updateVechicle(body.license, body.spot_num);
+        return res.status(201).json(result);
     } catch (err) {
-        console.error('Failed :( ', err);
-        res.status(500).json({ message: err.toString() });
+        console.error('Could Not Update Spot:', err);
+        return res.status(401).json({ message: err.toString() });
     }
-
     next();
 })
 
 router.delete('/', async(req, res, next) => {
     try{
         const body = req.query;
-        const result = await Employee.deleteVec(body.allocation_id);
+        const result = await Employee.deleteVec(body.spot_num);
         result.delete;
-        res.status(201).json(result);
-
+        return res.status(201).json(result);
     } catch(err){
-        console.error('Failed :( ', err);
-        res.status(500).json({ message: err.toString() });
+        console.error('Could Not Delete Spot:', err);
+        return res.status(401).json({ message: err.toString() });
     }
-
     next();
 })
 
