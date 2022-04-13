@@ -20,18 +20,28 @@ router.get('/spots', async (req, res, next) => {
     try {
         const body = req.query;
         let result; 
-        if (body.stadium_ID){
+
+        if (body.stadium_ID, body.lot_id, body.avalAllocation){
+            result = await EmployeeController.andOrAllocation(body.stadium_ID, body.lot_id, body.is_available);
+        }
+        
+        else if (body.stadium_ID, body.lot_id){
+            result = await EmployeeController.filterStadiumLot(body.stadium_ID, body.lot_id);
+        }
+
+        else if (body.stadium_ID){
             result = await EmployeeController.stadiumAllocation(body.stadium_ID);
         }
 
-        if (body.lot_id){
+        else if (body.lot_id){
             result = await EmployeeController.lotAllocation(body.lot_id);
         }
 
-        if (body.is_available){
+        else if (body.is_available){
             result = await EmployeeController.avalAllocation(body.is_available);
         }
         res.status(200).json(result);
+        
     } catch (err) {
         console.error('Failed to query spots:', err);
         res.status(500).json({ message: err.toString() });

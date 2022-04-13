@@ -21,8 +21,22 @@ const avalAllocation = async (is_available) => {
     return result;
 }
 
+const filterStadiumLot = async (stadium_ID, lot_id) => {
+    const query = knex(SPOTS_TABLE).where({stadium_ID, lot_id});
+    const result = await query;
+    return result;
+} 
+
+const andOrAllocation = async(stadium_ID, lot_id, is_available) => {
+    const query = knex(SPOTS_TABLE).where({stadium_ID, lot_id, is_available});
+    const result = await query;
+    return result;
+}
+
 module.exports = {
     stadiumAllocation,
     lotAllocation,
-    avalAllocation
+    avalAllocation,
+    filterStadiumLot,
+    andOrAllocation
 }
