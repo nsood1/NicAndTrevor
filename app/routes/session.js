@@ -10,6 +10,7 @@ const Employee = require('../models/employee');
 
 const router = express.Router();
 
+// Create Account
 router.post('/account', async (req, res, next) => {
     try {
         const body = req.body;
@@ -24,15 +25,14 @@ router.post('/account', async (req, res, next) => {
     next();
 })
 
+// Get Session Token
 router.post('/session', async (req, res, next) => {
     try {
         const body = req.body;
-        console.log(body);
         const result = await EmployeeController.authenticateEmployee(body.username, body.password);
-        res.status(201).json(result);
+        return res.status(201).json(result);
     } catch (err) {
-        console.error('Failed to create new employee:', err);
-        res.status(500).json({ message: err.toString() });
+        return res.status(401).json({ message: 'Body Does Not Match Existing Credentials' });
     }
     next();
 })
