@@ -50,10 +50,10 @@ Accepts License, Spot_Num</br>
 
 - Overall, it allows all the required processes in the project description to be carried out, so no potential is lost.
 
-- Here are the pictures of 3 - 7!
+- Here are the pictures of 3 - 7! (Btw I took one of these pictures at a later time, see if you can find which one!)
 
 <img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(58).png"></br>
-STILL NEED TO ADD
+<img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(62).png"></br>
 <img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(59).png"></br>
 <img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(60).png"></br>
 <img src="https://github.com/nsood1/NicAndTrevor/blob/TestBranch/app/pictures/Screenshot%20(61).png"></br>
