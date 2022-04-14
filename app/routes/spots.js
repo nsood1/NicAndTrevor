@@ -46,9 +46,9 @@ router.get('/spots', async (req, res, next) => {
         } 
         else { result = await Spots.noQuery(); }
         
-        res.status(200).json(result); 
+        return res.status(200).json(result); 
     } catch (err) {
-        res.status(401).json({ message: 'Could Not Execute Query' });
+        return res.status(401).json({ message: 'Could Not Execute Query' });
     }
     next();
 })
