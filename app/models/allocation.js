@@ -1,38 +1,49 @@
 const knex = require('../middleware/knex');
 
-const ALLOCATION_TABLE = 'vehicle';
+const VEHICLE_TABLE = 'vehicle';
 
-const allocationData = async (spot_num, license) => {
-    const query = knex(ALLOCATION_TABLE).where({ spot_num, license });
+// Creates New Vehicle With Allocation (Spot Number)
+const createVehicle = async (license, spot_num) => {
+    const query = knex(VEHICLE_TABLE).insert({ license, spot_num });
     const result = await query;
-    return result;
-}
-
-
-const createNewVechicle = async (license, type, spot_num, lot_id) => {
-    console.log('Licesnse:', license);
-    console.log('type', type);
-    console.log('spot_num', spot_num);
-    console.log('lot_id', lot_id);
-
-
-    const query = knex(ALLOCATION_TABLE).insert({ license, type, spot_num, lot_id });
-    console.log('Raw query for insert a new vechicle:', query.toString());
-    const result = await query;
-
     return result;
 };
 
-const deleteVec = async(license) => {
-    console.log('licence' , license);
-    const query = knex(ALLOCATION_TABLE).where({license});
+// Finds Allocation of Vehicle (License Identifier)
+const requestVehicle = async (license) => {
+    const query = knex(VEHICLE_TABLE).where({ license });
     const result = await query;
     return result;
 }
 
+// Finds Allocation of Vehicle (Spot Identifier)
+const requestSpot = async (spot_num) => {
+    const query = knex(VEHICLE_TABLE).where({ spot_num });
+    const result = await query;
+    return result;
+}
 
+// Updates Vehicle With New Allocation (Spot Number)
+const updateVehicle = async (license, spot_num) => {
+    const query = knex(VEHICLE_TABLE).where({ license }).update({ spot_num });
+    const result = await query;
+    return result;
+};
+
+// Deletes (Nullifies) Allocation Number (Spot Number)
+// Code To Delete Vehicle Entirely, Not Intended!
+// const query = knex(VEHICLE_TABLE).where({ spot_num }).del();
+const deleteVehicle = async(spot_num) => {
+    const query = knex(VEHICLE_TABLE).where({ spot_num }).update({ spot_num: null });
+    result = await query;
+    return result;
+}
+
+// Ayy Look Its CRUD
 module.exports = {
-    allocationData,
-    createNewVechicle,
-    deleteVec
+    createVehicle,
+    requestVehicle,
+    requestSpot,
+    updateVehicle,
+    deleteVehicle
 };

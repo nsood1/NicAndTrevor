@@ -1,28 +1,56 @@
 const express = require('express');
-const EmployeeController = require('../models/spots');
+const Spots = require('../models/spots');
+const Employee = require('../models/employee');
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
+// If Token, Get Username (User = Token)
+router.get('/session', async (req, res, next)  => {
     try {
-        const body = req.body;
-        console.log(body);
-
-        if (body.stadium_ID){
-            const result = await EmployeeController.stadiumAllocation(body.stadium_ID);
-        }
-
-        if (body.lot_id){
-            const result = await EmployeeController.lotAllocation(body.lot_id);
-        }
-
-        if (body.is_available){
-            const result = await EmployeeController.avalAllocation(body.is_available);
-        }
-        res.status(201).json(result);
+        const user = req.user;
+        const result = await Employee.findByUserName(user.username);
+        return res.status(200).json(result);
     } catch (err) {
-        console.error('Failed to query spots:', err);
-        res.status(500).json({ message: err.toString() });
+        return res.sendStatus(401).json({ message: 'Bad Token' });
+    }
+})
+
+// If Token, Find Spots (Query Parameters)
+router.get('/spots', async (req, res, next) => {
+    const query = req.query;
+    let result; 
+
+    try {
+
+        // Should Be 8 Queries (One For Each Combination)
+        if (query.stadium_id && query.lot_id && query.is_available) {
+            result = await Spots.stadiumLotAvailableQuery(query.stadium_id, query.lot_id, query.is_available);
+        } 
+        else if (query.stadium_id && query.lot_id) {
+            result = await Spots.stadiumLotQuery(query.stadium_id, query.lot_id);
+        } 
+        else if (query.stadium_id && query.is_available) {
+            result = await Spots.stadiumAvailableQuery(query.stadium_id, query.is_available);
+        } 
+        else if (query.lot_id && query.is_available) {
+            result = await Spots.lotAvailableQuery(query.lot_id, query.is_available);
+        } 
+        else if (query.stadium_id) { 
+            result = await Spots.stadiumQuery(query.stadium_id);
+        }
+        else if (query.lot_id) {
+            result = await Spots.lotQuery(query.lot_id);
+        } 
+        else if (query.is_available) {
+            result = await Spots.availableQuery(query.is_available);
+        } 
+        else { result = await Spots.noQuery(); }
+        
+        res.status(200).json(result); 
+    } catch (err) {
+        res.status(401).json({ message: 'Could Not Execute Query' });
     }
     next();
 })
+
+module.exports = router;

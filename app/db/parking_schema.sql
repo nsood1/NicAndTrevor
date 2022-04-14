@@ -54,9 +54,8 @@ CREATE TABLE ticket(
 );
 
 CREATE TABLE vehicle(
-    license VARCHAR(30),
+    license VARCHAR(30) PRIMARY KEY,
     type VARCHAR(30), -- Coupe, Sedan, Hatchback, SUV, Minivan, Van, Truck, RV
-    PRIMARY KEY (license, type),
     lot_id INTEGER REFERENCES parking_lot(id),
     spot_num INTEGER REFERENCES parking_spot(spot_num)
 );
@@ -66,7 +65,6 @@ CREATE TABLE fan(
     name VARCHAR(100),
     car_license VARCHAR(30) NOT NULL,
     car_type VARCHAR(30) NOT NULL,
-    FOREIGN KEY (car_license, car_type) REFERENCES vehicle(license, type),
     ticket_num INTEGER REFERENCES ticket(ticket_num)
 );
 

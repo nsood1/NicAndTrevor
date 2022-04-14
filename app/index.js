@@ -1,14 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// Import any route handlers here
-const employeeRoutes = require('./routes/account');
+// Import Route Handlers Here
 const sessionRoutes = require('./routes/session');
-const allocationRoutes = require('./routes/allocation');
 const spotsRoutes = require('./routes/spots')
+const allocationRoutes = require('./routes/allocation');
 
-// Import any middleware here
-//const { upConnection, downConnection, requestLogs } = require('./middleware/knex');
+// Import Middleware Here
 const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth');
 
 // Port 3000 Since SQL Runs 3306
@@ -24,10 +22,9 @@ app.get('/health', (request, response, next) => {
     next();
 });
 
-app.use('/session', sessionRoutes);
-app.use('/account', employeeRoutes);
-app.use('/allocation', allocationRoutes)
-// app.use('/spots', spotsRoutes);
+app.use(sessionRoutes);
+app.use(authenticateJWT, spotsRoutes);
+app.use('/allocation', authenticateJWT, allocationRoutes)
 
 // App Configured, Listen for Requests
 app.listen(port, () => {

@@ -3,29 +3,45 @@ const bcrypt = require('bcrypt');
 
 const EMPLOYEE_TABLE = 'employee';
 
+// Create Employee, Do Checks
 const createNewEmployee = async (username, password) => {
 
+    // Need Username
+    if (!username) {
+        return {
+            success: false,
+            message: 'Username Required'
+        }
+    }
+
+    // Need Password
+    if (!password) {
+        return {
+            success: false,
+            message: 'Password Required'
+        }
+    }
+
     // Hash Password with Bcrypt
-    console.log('Raw password:', password);
     const salt = await bcrypt.genSalt(10);
-    console.log('Password salt', salt);
     const hashedPassword = await bcrypt.hash(password, salt);
-    console.log('Hashed password', hashedPassword);
 
     // Create New Employee With UserName, Password
     const query = knex(EMPLOYEE_TABLE).insert({ username, password: hashedPassword });
-    console.log('Raw query for createNewEmployee:', query.toString());
-    const result = await query;
+    result = await query;
+    result['success'] = true;
     return result;
 
 };
 
+// Find Specified Employee
 const findByUserName = async (username) => {
     const query = knex(EMPLOYEE_TABLE).where({ username });
     const result = await query;
     return result;
 }
 
+// Authenticate Employee
 const authenticateEmployee = async (username, password) => {
     const employees = await findByUserName(username);
     console.log('Results of employee query', employees);

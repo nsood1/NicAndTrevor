@@ -1,5 +1,6 @@
 const express = require('express');
 const EmployeeController = require('../controllers/employee');
+const Employee = require('../models/employee');
 
 /**
  * https://expressjs.com/en/guide/routing.html#express-router
@@ -9,29 +10,33 @@ const EmployeeController = require('../controllers/employee');
 
 const router = express.Router();
 
-router.post('/', async (req, res, next) => {
+// Create Account
+router.post('/account', async (req, res, next) => {
     try {
         const body = req.body;
-        console.log(body);
-        const result = await EmployeeController.authenticateEmployee(body.username, body.password);
-        res.status(201).json(result);
+        result = await Employee.createNewEmployee(body.username, body.password);
+        if (result.success) {
+            result = await Employee.findByUserName(body.username);
+            return res.status(201).json(result[0]); } 
+        else { return res.status(400).json(result); }
     } catch (err) {
-        console.error('Failed to create new employee:', err);
-        res.status(500).json({ message: err.toString() });
+        return res.status(400).json({ message: 'Duplicate Entry' });
     }
     next();
 })
 
-
-router.get('/', async (req, res, next)  => {
+// Get Session Token
+router.post('/session', async (req, res, next) => {
     try {
-        const employee = req.employee;
-        const result = await Employee.findByUserName(employee.username);
-        res.status(201).json(result);
+        const body = req.body;
+        const result = await EmployeeController.authenticateEmployee(body.username, body.password);
+        if (result == null) {
+            return res.status(401).json({ message: 'Body Does Not Match Existing Credentials' }); }
+        return res.status(201).json(result);
     } catch (err) {
-        console.error('Failed to load current employee:', err);
-        res.sendStatus(500).json({ message: err.toString() });
+        return res.status(401).json({ message: 'Body Does Not Match Existing Credentials' });
     }
+    next();
 })
 
 module.exports = router;
