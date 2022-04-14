@@ -9,7 +9,7 @@ router.get('/session', async (req, res, next)  => {
     try {
         const user = req.user;
         const result = await Employee.findByUserName(user.username);
-        return res.status(200).json(result);
+        return res.status(200).json(result[0]);
     } catch (err) {
         return res.sendStatus(401).json({ message: 'Bad Token' });
     }
