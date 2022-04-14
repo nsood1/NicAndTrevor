@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 // Add Health Route. Note Argument: next
 app.get('/health', (request, response, next) => {
     const responseBody = { status: 'up', port };
-    response.json(responseBody);
+    return response.json(responseBody);
     next();
 });
 
