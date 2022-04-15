@@ -16,6 +16,8 @@ const router = express.Router();
 // If None, Throw Exception
 router.post('/', async (req, res, next) => {
     const body = req.body;
+    process.stdout.write("Parameters: ");
+    console.log(body);
 
     // Null Other Object (If Exists)
     result = await Allocation.requestSpot(body.spot_num);
@@ -46,6 +48,8 @@ router.post('/', async (req, res, next) => {
 router.put('/:spot_num?', async (req, res, next) => {
     const body = req.body;
     const params = req.params;
+    process.stdout.write("Parameters: ");
+    console.log(body);
 
     // Null Other Object (Extra Error Handling For Param)
     try {
@@ -74,6 +78,8 @@ router.put('/:spot_num?', async (req, res, next) => {
 // Note: In Our Implementation, Allocation Spot Is Inside
 // Vehicle Table, So We Set Spot_Num To Null Instead!
 router.delete('/:spot_num?', async(req, res, next) => {
+    console.log("Parameters: None");
+
     try{
         const params = req.params;
 

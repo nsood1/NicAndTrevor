@@ -14,6 +14,8 @@ const router = express.Router();
 router.post('/account', async (req, res, next) => {
     try {
         const body = req.body;
+        process.stdout.write("Parameters: ");
+        console.log(body);
         result = await Employee.createNewEmployee(body.username, body.password);
         if (result.success) {
             result = await Employee.findByUserName(body.username);
@@ -29,6 +31,8 @@ router.post('/account', async (req, res, next) => {
 router.post('/session', async (req, res, next) => {
     try {
         const body = req.body;
+        process.stdout.write("Parameters: ");
+        console.log(body);
         const result = await EmployeeController.authenticateEmployee(body.username, body.password);
         if (result == null) {
             return res.status(401).json({ message: 'Body Does Not Match Existing Credentials' }); }
