@@ -13,12 +13,21 @@ const { authenticateJWT, authenticateWithClaims } = require('./middleware/auth')
 const app = express();
 const port = 3000;
 
+// Log Out Requests
+const myLogger = function (req, res, next) {
+    console.log("HTTP/URL: " + req.method + " http://localhost:3000" + req.url);
+    process.stdout.write("Timestamp: ");
+    console.log({data: Date.now()});
+    next();
+}
+  
+app.use(myLogger);
 app.use(bodyParser.json());
 
 // Add Health Route. Note Argument: next
 app.get('/health', (request, response, next) => {
     const responseBody = { status: 'up', port };
-    response.json(responseBody);
+    return response.json(responseBody);
     next();
 });
 

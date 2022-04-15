@@ -8,16 +8,20 @@ const router = express.Router();
 router.get('/session', async (req, res, next)  => {
     try {
         const user = req.user;
+        process.stdout.write("Parameters: ");
+        console.log(user);
         const result = await Employee.findByUserName(user.username);
         return res.status(200).json(result);
     } catch (err) {
-        return res.sendStatus(401).json({ message: 'Bad Token' });
+        return res.status(401).json({ message: 'Bad Token' });
     }
 })
 
 // If Token, Find Spots (Query Parameters)
 router.get('/spots', async (req, res, next) => {
     const query = req.query;
+    process.stdout.write("Parameters: ");
+    console.log(query);
     let result; 
 
     try {
@@ -46,9 +50,9 @@ router.get('/spots', async (req, res, next) => {
         } 
         else { result = await Spots.noQuery(); }
         
-        res.status(200).json(result); 
+        return res.status(200).json(result); 
     } catch (err) {
-        res.status(401).json({ message: 'Could Not Execute Query' });
+        return res.status(401).json({ message: 'Could Not Execute Query' });
     }
     next();
 })

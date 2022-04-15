@@ -99,8 +99,8 @@ INSERT INTO parking_spot(spot_num, is_available, is_handicap, employee_username,
 
 INSERT INTO parking_spot(spot_num, is_available, is_handicap, employee_username, lot_id) VALUES
 (201, false, true, 'TrevorDohm', 2), (202, false, false, 'TrevorDohm', 2),
-(203, false, true, 'TrevorDohm', 2), (204, false, false, 'TrevorDohm', 2),
-(205, false, true, 'TrevorDohm', 2), (206, false, false, 'TrevorDohm', 2);
+(203, true, true, 'TrevorDohm', 2), (204, true, false, 'TrevorDohm', 2),
+(205, true, true, 'TrevorDohm', 2), (206, true, false, 'TrevorDohm', 2);
 
 INSERT INTO ticket(price, event_id, lot_id) VALUES
 (88.00, 1, 1), (76.98, 1, 1), (149.98, 2, 2);
